@@ -48,13 +48,7 @@ async def export_msg(ctx, origin_channel_id: int, destination_server_id: int, de
             for attachment in message.attachments:
                 if attachment is not None:
                     data = await attachment.read()
-                    await destination_channel.send(content='', file=discord.File(io.BytesIO(data), filename=attachment.filename))
-
-            if message.mentions:
-                await destination_channel.send(f'{", ".join([mention.name for mention in message.mentions])}')
-
-            if message.reactions:
-                await destination_channel.send(f'{", ".join([reaction.emoji for reaction in message.reactions])}')
+                    await destination_channel.send(content='', file=discord.File(io.BytesIO(data), filename=attachment.filename))     
 
     await ctx.send(f'Mensajes exportados de {origin_channel.mention} a {destination_channel.mention}')
 
