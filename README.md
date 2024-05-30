@@ -16,6 +16,7 @@ Está organizado en una serie de comandos básicos para llevar a cabo estas migr
 
 Para obtener las ID de servidores o canales, es necesario habilitar el modo de desarrollador. Esto permitirá hacer clic derecho en un canal o servidor para mostrar la opción de copiar la ID. Para activar el modo de desarrollador, simplemente ve a Configuración de usuario > Avanzado y actívalo allí.
 
+---
 
 The main purpose of this bot is to facilitate the migration of messages or even entire servers in Discord.
 
