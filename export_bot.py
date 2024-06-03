@@ -5,7 +5,7 @@ from lenguage import load_settings, get_translation, set_language
 
 intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or('!', '/'), intents=intents)
 
 TOKEN = 'TOKEN'
 
@@ -179,9 +179,22 @@ async def create_template_guide(ctx):
     await ctx.send(instructions)
 
 @bot.command()
-# @commands.has_permissions(administrator=True)
+@commands.has_permissions(administrator=True)
 async def set_bot_language(ctx, language_code: str):
     set_language(ctx, language_code, settings) 
     await ctx.send(f"{get_translation(ctx,'translation_to', settings)}{language_code}")
+
+@bot.command()
+async def custom_help(ctx):
+    help_text = f"""
+    **{get_translation(ctx,'translation_to', settings)}**
+    
+    - {get_translation(ctx,'export_msg_text', settings)}
+    - {get_translation(ctx,'full_backup_text', settings)}
+    - {get_translation(ctx,'server_info_text', settings)}
+    - {get_translation(ctx,'set_bot_language_text', settings)}
+    - {get_translation(ctx,'create_template_guide_text', settings)}
+    """
+    await ctx.send(help_text)
     
 bot.run(TOKEN)

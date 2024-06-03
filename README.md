@@ -36,6 +36,10 @@ Está organizado en una serie de comandos básicos para llevar a cabo estas migr
 
     `!set_bot_language lenguaje`
 
+- **Listado de comandos**:
+
+    `!custom_help`
+
 Para obtener las ID de servidores o canales, es necesario habilitar el modo de desarrollador. Esto permitirá hacer clic derecho en un canal o servidor para mostrar la opción de copiar la ID. Para activar el modo de desarrollador, simplemente ve a Configuración de usuario > Avanzado y actívalo allí.
 
 ---
@@ -75,5 +79,9 @@ It is organized into a series of basic commands to carry out these migrations:
     Currently, the bot supports two languages: Spanish and English. 'es' corresponds to Spanish, and 'en' to English.
 
     `!set_bot_language language`
+
+- **Command help**:
+
+    `!custom_help`
 
 To obtain the IDs of servers or channels, it is necessary to enable developer mode. This will allow right-clicking on a channel or server to display the option to copy the ID. To activate developer mode, simply go to User Settings > Advanced and enable it there.

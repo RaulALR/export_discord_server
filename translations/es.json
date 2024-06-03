@@ -24,5 +24,11 @@
     "template_msg_7": "6. Copia el enlace de la plantilla y compártelo con quien desees.\n",
     "template_msg_8": "7. Añade tu bot con permisos de administración.\n",
     "template_msg_9": "8. Si quieres que migre el contenido de tu servidor lanza este comando: `!full_backup(id_servidor_origen, id_servidor_destino)`.\n",
-    "translation_to": "Lenguaje cambiado a "
+    "translation_to": "Lenguaje cambiado a ",
+    "command_list_title": "Lista de Comandos:",
+    "export_msg_text": "`!export_msg <canal_origen_id> <servidor_destino_id> <canal_destino_id>`: Migra mensajes de un canal de origen a un canal de destino.",
+    "full_backup_text": "`!full_backup <id_servidor_actual> <id_servidor_destino>`: Realiza una copia completa de un servidor.",
+    "server_info_text": "`!server_info`: Muestra información del servidor actual, incluyendo categorías, canales y roles.",
+    "set_bot_language_text": "`!set_bot_language <lenguaje>`: Cambia el idioma del bot. Actualmente soporta 'es' para español y 'en' para inglés.",
+    "create_template_guide_text": "`!create_template_guide`: Muestra una guía para crear una plantilla del servidor."
 }

@@ -24,5 +24,11 @@
     "template_msg_7": "6. Copy the template link and share it with whoever you want.\n",
     "template_msg_8": "7. Add your bot with administrator permissions.\n",
     "template_msg_9": "8. If you want your server content to be migrated, launch this command: !full_backup(origin_server_id, destination_server_id).\n",
-    "translation_to": "Language set to "
+    "translation_to": "Language set to ",
+    "command_list_title": "Command List:",
+    "export_msg_text": "`!export_msg <source_channel_id> <destination_server_id> <destination_channel_id>`: Migrates messages from a source channel to a destination channel.",
+    "full_backup_text": "`!full_backup <current_server_id> <destination_server_id>`: Performs a full backup of a server.",
+    "server_info_text": "`!server_info`: Displays information about the current server, including categories, channels, and roles.",
+    "set_bot_language_text": "`!set_bot_language <language>`: Changes the bot's language. Currently supports 'es' for Spanish and 'en' for English.",
+    "create_template_guide_text": "`!create_template_guide`: Displays a guide for creating a server template."
 }
