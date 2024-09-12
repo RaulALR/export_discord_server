@@ -1,13 +1,19 @@
 import discord
+import os
 from discord.ext import commands
 import io
 from lenguage import load_settings, get_translation, set_language
-
+import pandas as pd
+import openpyxl
+from openpyxl.utils.dataframe import dataframe_to_rows
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
+intents.reactions = True
+intents.guilds = True
 bot = commands.Bot(command_prefix=commands.when_mentioned_or('!', '/'), intents=intents)
 
-TOKEN = 'TOKEN'
+TOKEN = ''
 
 settings = load_settings()
 
@@ -196,5 +202,73 @@ async def custom_help(ctx):
     - {get_translation(ctx,'create_template_guide_text', settings)}
     """
     await ctx.send(help_text)
+    
+@bot.command()
+async def excel_asistencia(ctx, channel_id, event, rol_name = None):
+    guild = ctx.guild
+    channel = await bot.fetch_channel(channel_id)
+    if not rol_name:
+        rol_applicant_id = 1068070310148046878
+        rol_member_id = 980418204901965834
+        rol_applicant = discord.utils.get(guild.roles, id=rol_applicant_id)
+        rol_member = discord.utils.get(guild.roles, id=rol_member_id)
+        rol_applicant_list = [member for member in guild.members if rol_applicant in member.roles]
+        rol_member_list = [member for member in guild.members if rol_member in member.roles]
+        
+        members_with_rol = rol_applicant_list + rol_member_list
+    else:
+        rol = discord.utils.get(guild.roles, name=rol_name)
+        members_with_rol = [member for member in guild.members if rol in member.roles]
+
+    message = await channel.fetch_message(event)
+    embeds = message.embeds
+
+    if not embeds or len(embeds[0].fields) < 3:
+        await ctx.send("El mensaje no tiene la estructura esperada.")
+        return
+
+    yes_election_list = embeds[0].fields[1].value
+    no_election_list = embeds[0].fields[2].value
+
+    yes_election_list = yes_election_list[4:].replace('<@', '').replace('>', '').split('\n')
+    no_election_list = no_election_list[4:].replace('<@', '').replace('>', '').split('\n')
+
+    yes_election_member = [member.display_name for member in members_with_rol if str(member.id) in yes_election_list]
+    no_election_member = [member.display_name for member in members_with_rol if str(member.id) in no_election_list]
+    no_chose_election = [member.display_name for member in members_with_rol if str(member.id) not in yes_election_list and str(member.id) not in no_election_list]
+
+    max_length = max(len(yes_election_member), len(no_election_member), len(no_chose_election))
+
+    yes_election_member += [None] * (max_length - len(yes_election_member))
+    no_election_member += [None] * (max_length - len(no_election_member))
+    no_chose_election += [None] * (max_length - len(no_chose_election))
+
+    df_combined = pd.DataFrame({
+        'Apuntados sí': yes_election_member,
+        'Apuntados no': no_election_member,
+        'No apuntados': no_chose_election
+    })
+
+    excel_file = 'asistencias.xlsx'
+    df_combined.to_excel(excel_file, sheet_name='Asistencia', index=False)
+    
+    wb = openpyxl.load_workbook(excel_file)
+    ws = wb.active
+
+    column_widths = {
+        'A': 30,
+        'B': 30,
+        'C': 30
+    }
+
+    for col, width in column_widths.items():
+        ws.column_dimensions[col].width = width
+
+    wb.save(excel_file)
+    wb.close()
+
+    await ctx.send(file=discord.File(excel_file))
+
+    os.remove(excel_file)
     
 bot.run(TOKEN)
